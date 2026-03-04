@@ -18,9 +18,14 @@ services:
       - db
     environment:
       DATABASE_URL: "postgresql://labuser:labpassword@db:5432/labdb"
+      # Enable auto-reload inside the container (change to "false" to disable)
+      AUTO_RELOAD: "true"
+      # Default script to run inside the container (can be "main.py" or "algorithms.py")
+      APP_SCRIPT: "main.py"
     volumes:
       - ./app:/usr/src/app
-    command: ["python", "main.py"]
+    # Use the dev runner which will pick up APP_SCRIPT and AUTO_RELOAD
+    command: ["sh", "/usr/src/app/dev_runner.sh"]
     ports:
       - "8000:8000" # if you want to expose any web service
 
