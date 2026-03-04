@@ -4,7 +4,8 @@ WORKDIR /app
 
 # Install deps
 COPY package.json package-lock.json* ./
-RUN npm install --no-audit --no-fund || true
+# Install dependencies (do not swallow errors so build fails if something is missing)
+RUN npm install --no-audit --no-fund
 
 # Copy source and run dev server
 COPY . .
