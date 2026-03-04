@@ -42,6 +42,20 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
+  frontend:
+    build: ./frontend
+    depends_on:
+      - app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      # Vite needs to bind to 0.0.0.0; package.json dev script already does that
+      CHOKIDAR_USEPOLLING: "true"
+    command: ["npm", "run", "dev"]
+
 volumes:
   db-data:
   pgadmin-data:
